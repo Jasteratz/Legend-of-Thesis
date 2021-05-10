@@ -4,5 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
-  m_configObjects: {}
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/LegendOfPtyxiaki.unity
+    guid: 38df323ea4221ef4689fd4b55b095128
+  m_configObjects:
+    com.unity.input.settings: {fileID: 11400000, guid: d11c5f2169693944ca5f5b8340492427,
+      type: 2}
