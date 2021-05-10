@@ -283,7 +283,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &103138862
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6851,7 +6851,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &612248791
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11813,7 +11813,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &704110233
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28205,7 +28205,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &1732380721
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -28349,7 +28349,7 @@ MonoBehaviour:
     ModeOverride: 0
     LensShift: {x: 0, y: 0}
     GateFit: 0
-    m_SensorSize: {x: 1.7780195, y: 1}
+    m_SensorSize: {x: 1.7784172, y: 1}
   m_Transitions:
     m_BlendHint: 0
     m_InheritPosition: 0
