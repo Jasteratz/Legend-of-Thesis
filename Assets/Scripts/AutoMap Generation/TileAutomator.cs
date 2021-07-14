@@ -25,8 +25,8 @@ public class TileAutomator : MonoBehaviour {
     [Header("Tilemap Options")]
     public Tilemap topMap;
     public Tilemap botMap;
-    public RuleTile topTile;
-    public RuleTile botTile;
+    public RuleTile[] topTile;
+    public RuleTile[] botTile;
     public Tile spawnTile;
 
     [Header("Spawner Options")]
@@ -55,6 +55,7 @@ public class TileAutomator : MonoBehaviour {
     {
         MonsterSpawned = new GameObject[numOfSpawn];
         ItemsSpawned = new GameObject[numOfItems];
+        doSim(numR);
     }
 
     public void doSim(int num)
@@ -80,8 +81,8 @@ public class TileAutomator : MonoBehaviour {
         for (int x = 0; x < width; x++){
             for (int y = 0; y < height; y++){
                 if (terrainMap[x, y] == 1)
-                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile);
-                botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile);
+                    topMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), topTile[0]);
+                botMap.SetTile(new Vector3Int(-x + width / 2, -y + height / 2, 0), botTile[0]);
             }
         }
 
@@ -110,7 +111,7 @@ public class TileAutomator : MonoBehaviour {
             if (terrainMap[xRand, yRand] == 0)
             {
                 //botMap.SetTile(new Vector3Int(-xRand + width / 2, -yRand + height / 2, 0), spawnTile); //GIA NA CHEKCARO TA SPAWN POINTS OTAN XREIAZETAI
-                GameObject Monster = Instantiate(MonstersToSpawn[Random.Range(0, MonstersToSpawn.Length)], botMap.GetCellCenterWorld(new Vector3Int(-xRand + width / 2, -yRand + height / 2, 0)), Quaternion.identity/*,MonsterGroup.transform*/) as GameObject;
+                GameObject Monster = Instantiate(MonstersToSpawn[Random.Range(0, MonstersToSpawn.Length)], botMap.GetCellCenterWorld(new Vector3Int(-xRand + width / 2, -yRand + height / 2, 0)), Quaternion.identity,MonsterGroup.transform) as GameObject;
                 MonsterSpawned[numOfSpawn - spawnCounter] = Monster;
                 spawnCounter--;
             }
@@ -126,7 +127,7 @@ public class TileAutomator : MonoBehaviour {
             yRand = Random.Range(0, height);
             if (terrainMap[xRand, yRand] == 0 && terrainMap[xRand, yRand + 1] == 1)
             {
-                GameObject Light = Instantiate(ItemsToSpawn[Random.Range(0, ItemsToSpawn.Length)], botMap.GetCellCenterWorld(new Vector3Int(-xRand + width / 2, -yRand + height / 2, 0)), Quaternion.identity/*,ItemGroup.transform*/) as GameObject;
+                GameObject Light = Instantiate(ItemsToSpawn[Random.Range(0, ItemsToSpawn.Length)], botMap.GetCellCenterWorld(new Vector3Int(-xRand + width / 2, -yRand + height / 2, 0)), Quaternion.identity,ItemGroup.transform) as GameObject;
                 ItemsSpawned[numOfItems - num] = Light;
                 num--;
             }
@@ -186,7 +187,6 @@ public class TileAutomator : MonoBehaviour {
         }
         return newMap;
     }
-
     void Update()
     {
 

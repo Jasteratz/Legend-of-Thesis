@@ -5,9 +5,21 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 1
-    path: Assets/Scenes/LegendOfPtyxiaki.unity
-    guid: 38df323ea4221ef4689fd4b55b095128
+    path: Assets/Scenes/Menu Scene.unity
+    guid: fbd1a893be426d04a912073e505b49af
+  - enabled: 1
+    path: Assets/Scenes/Temple Scene.unity
+    guid: a14f292fce9bb2c479e920b01b950ab2
+  - enabled: 1
+    path: Assets/Scenes/Dungeon Scene.unity
+    guid: 16c9e016953ad2a4baebf467cf378428
+  - enabled: 1
+    path: Assets/Scenes/Game Over Scene.unity
+    guid: ba7dbefe3d676304b94b71823b9a4257
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: d11c5f2169693944ca5f5b8340492427,
       type: 2}

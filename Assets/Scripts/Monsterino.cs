@@ -1,18 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Monsterino : Enemy
 
     
 {
-    
+
     
     public float chaseRadius;
     public float attackRadius;
     public Transform homePosition;
+    public PolygonCollider2D HitDetector;
     //public Animator anim;
-    
+    public Slider HP;
 
 
     // Start is called before the first frame update
@@ -105,5 +107,15 @@ public class Monsterino : Enemy
             currentState = newState;
     }
 
-    
+  
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.gameObject.CompareTag("Player"))
+        {
+            other.gameObject.GetComponent<HealthManager>().getDamaged(10);
+            
+            Debug.Log("Pare kai aftin");
+        }
+    }
 }
+

@@ -9,7 +9,8 @@ public enum PlayerState {
     interact,
     stagger,
     idle,
-    dash
+    dash,
+    death
 }
 
 public class PlayerMovement : MonoBehaviour {
@@ -22,14 +23,15 @@ public class PlayerMovement : MonoBehaviour {
     public float speed;
     private Vector3 change;
     
-    //Health System
-    public FloatValue currentHealth;
-    public Signaling playerHealthSignal;
+
     
     //Flip
     public bool facingRight = true;
 
+    //Dungeon
+    public DungeonLoader dungeon;
 
+    public Boolean isDead=false;
 
     
     void Start()
@@ -42,6 +44,8 @@ public class PlayerMovement : MonoBehaviour {
         animator.SetFloat("moveX", 0);
         animator.SetFloat("moveY", -1);
 
+        
+
 
 
     }
@@ -49,26 +53,33 @@ public class PlayerMovement : MonoBehaviour {
     // Update is called once per frame
     void FixedUpdate()
     {
-        change = Vector3.zero;
-        change.x = Input.GetAxisRaw("Horizontal");
-        change.y = Input.GetAxisRaw("Vertical");
-        if (change.x == 0 && change.y == 0&&currentState!=PlayerState.attack)
+        if (isDead)
         {
-            currentState = PlayerState.idle;
-            myRigidbody.velocity = new Vector2(0,0);
+            return;
         }
         else
-            currentState = PlayerState.walk;
-      
-    
-        if (currentState == PlayerState.walk || currentState == PlayerState.idle)
         {
-          //TEST EDO TO FLIP
-            if (change.x > 0 && !facingRight)
-                Flip();
-            else if (change.x < 0 && facingRight)
-                Flip();
-            UpdateAnimationAndMove();
+            change = Vector3.zero;
+            change.x = Input.GetAxisRaw("Horizontal");
+            change.y = Input.GetAxisRaw("Vertical");
+            if (change.x == 0 && change.y == 0 && currentState != PlayerState.attack)
+            {
+                currentState = PlayerState.idle;
+                myRigidbody.velocity = new Vector2(0, 0);
+            }
+            else
+                currentState = PlayerState.walk;
+
+
+            if (currentState == PlayerState.walk || currentState == PlayerState.idle)
+            {
+                //TEST EDO TO FLIP
+                if (change.x > 0 && !facingRight)
+                    Flip();
+                else if (change.x < 0 && facingRight)
+                    Flip();
+                UpdateAnimationAndMove();
+            }
         }
     }
 
@@ -115,20 +126,7 @@ public class PlayerMovement : MonoBehaviour {
         currentState = PlayerState.walk;
     }
 
-    public void Knock(float knockTime,float damage)
-    {
-        currentHealth.RuntimeValue -= damage;
-        if (currentHealth.RuntimeValue > 0)
-        {
-            playerHealthSignal.Raise();
-            StartCoroutine(KnockCo(knockTime));
-        }
-        else
-        {
-            this.gameObject.SetActive(false);
-        }
-        
-    }
+
 
     private IEnumerator KnockCo(float knockTime)
     {
@@ -141,5 +139,13 @@ public class PlayerMovement : MonoBehaviour {
         }
     }
 
-
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("1"))
+        {
+            dungeon.LoadNextLevel();
+            Debug.Log("epitelous");
+        }
+            
+    }
 }

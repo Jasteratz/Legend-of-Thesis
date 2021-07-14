@@ -14,8 +14,8 @@ public class Enemy : MonoBehaviour {
 
     public EnemyState currentState;
     //public AudioSource hitSound;
-    public FloatValue maxHealth;
-    public float health;
+    
+    public float health=100;
     public string enemyName;
     public int baseAttack;
     public float moveSpeed;
@@ -30,7 +30,7 @@ public class Enemy : MonoBehaviour {
 
     private void Awake()
     {
-        health = maxHealth.initialValue;
+        health = 100;
         
     }
 

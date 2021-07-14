@@ -9,12 +9,8 @@ public class Knockback : MonoBehaviour {
     public float knockTime;
     public int damage;
 
-    private void OnTriggerEnter2D(Collider2D other)
+   /* private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("breakable") && this.gameObject.CompareTag("Player"))
-        {
-            other.GetComponent<Pot>().Smash();
-        }
         if (other.gameObject.CompareTag("enemy") || other.gameObject.CompareTag("Player"))
         {
             Rigidbody2D hit = other.GetComponent<Rigidbody2D>();
@@ -38,7 +34,7 @@ public class Knockback : MonoBehaviour {
                 }
             }
         }
-    }
+    }*/
 
 
 }
