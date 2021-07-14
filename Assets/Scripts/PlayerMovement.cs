@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,55 +8,89 @@ public enum PlayerState {
     attack,
     interact,
     stagger,
-    idle
+    idle,
+    dash,
+    death
 }
 
 public class PlayerMovement : MonoBehaviour {
-
-
-    public PlayerState currentState;
-    public float speed;
-    private Rigidbody2D myRigidbody;
-    private Vector3 change;
+    //Basics
     private Animator animator;
+    public PlayerState currentState;
+    private Rigidbody2D myRigidbody;
 
+    //Movement
+    public float speed;
+    private Vector3 change;
+    
 
-    // Use this for initialization
+    
+    //Flip
+    public bool facingRight = true;
+
+    //Dungeon
+    public DungeonLoader dungeon;
+
+    public Boolean isDead=false;
+
+    
     void Start()
     {
-        currentState = PlayerState.walk;
         animator = GetComponent<Animator>();
         myRigidbody = GetComponent<Rigidbody2D>();
+
+        currentState = PlayerState.walk;
+        
         animator.SetFloat("moveX", 0);
         animator.SetFloat("moveY", -1);
+
+        
+
+
 
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
-        change = Vector3.zero;
-        change.x = Input.GetAxisRaw("Horizontal");
-        change.y = Input.GetAxisRaw("Vertical");
-        if (Input.GetButtonDown("attack") && currentState != PlayerState.attack
-           && currentState != PlayerState.stagger)
+        if (isDead)
         {
-            StartCoroutine(AttackCo());
+            return;
         }
-        else if (currentState == PlayerState.walk || currentState == PlayerState.idle)
+        else
         {
-            UpdateAnimationAndMove();
+            change = Vector3.zero;
+            change.x = Input.GetAxisRaw("Horizontal");
+            change.y = Input.GetAxisRaw("Vertical");
+            if (change.x == 0 && change.y == 0 && currentState != PlayerState.attack)
+            {
+                currentState = PlayerState.idle;
+                myRigidbody.velocity = new Vector2(0, 0);
+            }
+            else
+                currentState = PlayerState.walk;
+
+
+            if (currentState == PlayerState.walk || currentState == PlayerState.idle)
+            {
+                //TEST EDO TO FLIP
+                if (change.x > 0 && !facingRight)
+                    Flip();
+                else if (change.x < 0 && facingRight)
+                    Flip();
+                UpdateAnimationAndMove();
+            }
         }
     }
 
-    private IEnumerator AttackCo()
+   
+
+    void Flip()
     {
-        animator.SetBool("attacking", true);
-        currentState = PlayerState.attack;
-        yield return null;
-        animator.SetBool("attacking", false);
-        yield return new WaitForSeconds(.3f);
-        currentState = PlayerState.walk;
+        facingRight = !facingRight;
+        Vector3 theScale = transform.localScale;
+        theScale.x *= -1;
+        transform.localScale = theScale;
     }
 
     void UpdateAnimationAndMove()
@@ -75,25 +110,42 @@ public class PlayerMovement : MonoBehaviour {
 
     void MoveCharacter()
     {
+        
         change.Normalize();
         myRigidbody.MovePosition(
             transform.position + change * speed * Time.deltaTime
         );
     }
 
-    public void Knock(Rigidbody2D hit,float knockTime)
+    void Dash()
     {
-        StartCoroutine(KnockCo(hit,knockTime));
+        change.Normalize();
+        myRigidbody.MovePosition(
+            transform.position + change * speed * 2 * Time.deltaTime
+        );
+        currentState = PlayerState.walk;
     }
 
-    private IEnumerator KnockCo(Rigidbody2D hit, float knockTime)
+
+
+    private IEnumerator KnockCo(float knockTime)
     {
-        if (hit != null)
+        if (myRigidbody != null)
         {
             yield return new WaitForSeconds(knockTime);
-            hit.velocity = Vector2.zero;
+            myRigidbody.velocity = Vector2.zero;
             currentState = PlayerState.idle;
-            hit.velocity = Vector2.zero;
+            myRigidbody.velocity = Vector2.zero;
         }
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("1"))
+        {
+            dungeon.LoadNextLevel();
+            Debug.Log("epitelous");
+        }
+            
     }
 }

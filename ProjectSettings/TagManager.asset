@@ -6,6 +6,10 @@ TagManager:
   tags:
   - breakable
   - enemy
+  - knockTag
+  - 1
+  - 2
+  - 3
   layers:
   - Default
   - TransparentFX
@@ -15,7 +19,7 @@ TagManager:
   - UI
   - 
   - 
-  - 
+  - Enemy
   - 
   - 
   - 
