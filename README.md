@@ -1,15 +1,15 @@
-## Table of contents
-* [General info](#general-info)
-* [Description](#description)
-* [Assets](#assets)
+# Legend of Thesis
 
-## General info
-This project is a 2D pixel art game developed in Unity for my University Thesis.
+## Table of Contents
+1. [General Info](#general-info)
+2. [Description](#description)
+3. [Assets](#assets)
 
-## Description
+## General Info <a name="general-info"></a>
+This project is a 2D game developed in Unity as part of a university thesis. 
 
-2D top down rpg made with games like Legend of Zelda in mind. Usage of a random generation algorithm for creating dynamic dungeons each time by taking advantage of the Game of Life algorithm
+## Description <a name="description"></a>
+This is a top-down 2D pixel art game that features randomly generated dungeons. These dungeons are generated using the principles of Conway's Game of Life. This classic cellular automaton provides a fascinating and complex behavior from simple rules, making each dungeon exploration a unique experience. Using the debug menu the user can also change the input of the automaton making for even more unique designs.
 
-## Assets
-
-Most of the graphical assets were created by me using Aseprite 
+## Assets <a name="assets"></a>
+Most of the game assets were created by me using Aseprite and Tilesetter for the tilesets generated
